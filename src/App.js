@@ -26,6 +26,8 @@ function App() {
   if (isAuthenticated) {
     routes = (
       <Routes>
+        <Route path="/" element={<Home />} />
+
         <Route path="/blog" element={<BlogPosts />} />
         <Route path="/blog/:id" element={<PostDetail />} />
       </Routes>
