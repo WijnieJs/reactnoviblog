@@ -1,15 +1,50 @@
-import React, { useState } from 'react';
-import './App.css';
+import React, { useState } from 'react'
+import { Route, Routes } from 'react-router-dom'
+
+import MainHeader from './components/Layout/MainHeader'
+import Home from './pages/Home'
+import BlogPosts from './pages/BlogPosts'
+import PostDetail from './pages/PostDetail'
+
+import './App.css'
 
 function App() {
-  // We houden in de state bij of iemand is "ingelogd" (simpele versie)
-  const [isAuthenticated, toggleIsAuthenticated ] = useState(false);
+  const [isAuthenticated, toggleIsAuthenticated] = useState(false)
 
+  const loginHandler = () => {
+    toggleIsAuthenticated(true)
+  }
+
+  const logoutHandler = () => {
+    toggleIsAuthenticated(false)
+  }
+  let routes = (
+    <Routes>
+      <Route path="/" element={<Home />} />
+    </Routes>
+  )
+  if (isAuthenticated) {
+    routes = (
+      <Routes>
+        <Route path="/" element={<Home />} />
+
+        <Route path="/blog" element={<BlogPosts />} />
+        <Route path="/blog/:id" element={<PostDetail />} />
+      </Routes>
+    )
+  }
   return (
-    <div>
-      Maak hier jouw prachtige blog-applicatie!
-    </div>
-  );
+    <>
+      <MainHeader
+        isAuth={isAuthenticated}
+        setAuth={loginHandler}
+        logout={logoutHandler}
+      />
+      <main>{routes}</main>
+    </>
+  )
 }
 
-export default App;
+export default App
+
+
